@@ -114,3 +114,7 @@
 * Add packages to system requirements to debian to ensure keyring works in minimized ubuntu
 * Remove dbus from python requirements and add it to system package requirements
 * If no keyring is found on linux, start the keyring service
+
+## 1.0.0 (07 September 2026)
+* Consolidate cryptography requirement declaration down to one declaration, and add extra package index to android install
+* Switch from netifaces to netifaces-plus
