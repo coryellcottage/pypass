@@ -1,7 +1,9 @@
+from keyring.errors import NoKeyringError
 from cryptography.fernet import Fernet
 from bastionpass.app import BastionPass
 from bastionpass.utils import *
 from pathlib import Path
+import subprocess
 import pytest
 import toga
 import json
@@ -136,20 +138,31 @@ def test_copy_to_clipboard():
 def test_get_main_key():
     Path(toga.App.app.paths.data, ".env").write_text("{}")
 
-    decryption_key = get_main_key()
-    print(f"Decryption key is of type: {type(decryption_key)}")
+    try:
+        decryption_key = get_main_key()
 
-    if toga.platform.current_platform == "android":
-        from java import jclass
-        assert isinstance(decryption_key, jclass("android.security.keystore2.AndroidKeyStoreSecretKey")) == True
+    except NoKeyringError:
+        if toga.platform.current_platform == "linux":
+            subprocess.run("dbus-run-session -- briefcase dev --test", shell=True)
 
     else:
-        encrypted_text = Fernet(decryption_key).encrypt(b"Some text")
-        assert Fernet(decryption_key).decrypt(encrypted_text).decode() == "Some text"
+        print(f"Decryption key is of type: {type(decryption_key)}")
+
+        if toga.platform.current_platform == "android":
+            from java import jclass
+            assert isinstance(decryption_key, jclass("android.security.keystore2.AndroidKeyStoreSecretKey")) == True
+
+        else:
+            encrypted_text = Fernet(decryption_key).encrypt(b"Some text")
+            assert Fernet(decryption_key).decrypt(encrypted_text).decode() == "Some text"
 
 def test_encrypt_and_decrypt_data():
-    encrypted_data = encrypt_data(data_to_encrypt="Test Text")
-    assert decrypt_data(data_to_decrypt=encrypted_data["encrypted_data"], iv=encrypted_data["iv_used"]) == "Test Text"
+    try:
+        encrypted_data = encrypt_data(data_to_encrypt="Test Text")
+        assert decrypt_data(data_to_decrypt=encrypted_data["encrypted_data"], iv=encrypted_data["iv_used"]) == "Test Text"
+
+    except NoKeyringError:
+        subprocess.run("dbus-run-session -- briefcase dev --test", shell=True)
 
 def test_offset_and_deoffset_string():
     offset_data, offset_number = offset_string(string_to_offset="Test String")

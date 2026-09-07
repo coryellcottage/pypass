@@ -42,15 +42,15 @@ test_sources = [
     "tests",
 ]
 
-requires = ["json_repair", "cryptography", "uvicorn", "fastapi", "httpx", "psutil", "keyring"
+requires = ["json_repair", "uvicorn", "fastapi", "httpx", "psutil", "keyring", "cryptography",
 ]
 test_requires = [
     "pytest",
     "pillow",
     "keyring",
     "requests",
-    "netifaces",
-    "toga-dummy"
+    "toga-dummy",
+    "netifaces-plus"
 ]
 
 [tool.briefcase.app.bastionpass.macOS]
@@ -68,7 +68,7 @@ requires = [
     # isn't available on Debian 12/Ubuntu 22.04. If you don't need to support those (or
     # older) releases, you can remove this version pin. See beeware/toga#3143.
 #    "pygobject < 3.52.1",
-    "pyperclip" # Needed for clipbaord functionality
+    "pyperclip", # Needed for clipbaord functionality
 ]
 
 [tool.briefcase.app.bastionpass.linux.system.debian]
@@ -78,8 +78,10 @@ system_requires = [
     # One of the following two packages are needed to compile PyGObject wheel. If you
     # remove the pygobject pin in the requires list, you should also change to the
     # version 2.0 of the girepository library. See beeware/toga#3143.
-    "libgirepository1.0-dev",
-    # "libgirepository-2.0-dev",
+    # "libgirepository1.0-dev",
+    "libgirepository-2.0-dev",
+    "python3-dbus", # Needed for keyring functinality
+    "dbus-x11" # Needed for keyring functionality
 ]
 
 system_runtime_requires = [
@@ -95,7 +97,8 @@ system_runtime_requires = [
     # Needed to provide WebKit2 at runtime
     # Note: Debian 11 requires gir1.2-webkit2-4.0 instead
     # "gir1.2-webkit2-4.1",
-    "xclip" # Needed for pyperclip
+    "xclip", # Needed for pyperclip
+    "gnome-keyring" # Needed for keyring functionality
 ]
 
 [tool.briefcase.app.bastionpass.linux.system.rhel]
@@ -206,9 +209,14 @@ requires = [
 
 [tool.briefcase.app.bastionpass.android]
 requires = [
+    "pydantic<2",
     "toga-android~=0.5.0",
     "git+https://bitbucket.org/TomArn/tatogalib.git@version_2025-02-26",
-    "pydantic<2"
+]
+
+requirement_installer_args = [
+    "--extra-index",
+    "https://smallcoder13.github.io/simple",
 ]
 
 base_theme = "Theme.MaterialComponents.Light.DarkActionBar"
