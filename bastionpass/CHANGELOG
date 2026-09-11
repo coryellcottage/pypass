@@ -118,3 +118,6 @@
 ## 1.0.0 (07 September 2026)
 * Consolidate cryptography requirement declaration down to one declaration, and add extra package index to android install
 * Switch from netifaces to netifaces-plus
+
+## 1.0.0 (10 September 2026)
+* Add custom package index to installer args for all platforms, not just android

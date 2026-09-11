@@ -44,6 +44,12 @@ test_sources = [
 
 requires = ["json_repair", "uvicorn", "fastapi", "httpx", "psutil", "keyring", "cryptography",
 ]
+
+requirement_installer_args = [
+    "--extra-index",
+    "https://smallcoder13.github.io/simple",
+]
+
 test_requires = [
     "pytest",
     "pillow",
@@ -212,11 +218,6 @@ requires = [
     "pydantic<2",
     "toga-android~=0.5.0",
     "git+https://bitbucket.org/TomArn/tatogalib.git@version_2025-02-26",
-]
-
-requirement_installer_args = [
-    "--extra-index",
-    "https://smallcoder13.github.io/simple",
 ]
 
 base_theme = "Theme.MaterialComponents.Light.DarkActionBar"
