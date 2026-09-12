@@ -121,3 +121,6 @@
 
 ## 1.0.0 (10 September 2026)
 * Add custom package index to installer args for all platforms, not just android
+
+## 1.0.0 (11 September 2026)
+* Change github CI version from python3.14 to python3.13
