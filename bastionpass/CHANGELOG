@@ -89,5 +89,38 @@
 * Update import_from_file utility to use read().split("\n") instead of readlines()
 * Update test suite and add new tests for new utilities
 
-##1.0.0 (1 September 2026)
+## 1.0.0 (1 September 2026)
+* Add secretstorge and jeepney to linux requirements in hopes of getting keyring to work on fedora
+* Upgrade version of libgirepository from 1.0 to 2.0 in github CI and pyproject.toml
+* Add separate package index for cryptography python3.13 - python3.15
+* Update github CI to use `bastionpass` directory instead of `pypass`
+* Move comma up so it isn't apart of the comment anymore
+* Replace double quotes with single quotes in github CI
+* Add step to github CI to sign android app on release
+* Update OS verison of Ubuntu and Fedora in github CI
+* Remove no longer needed argument for test suite
+* Fix github CI failing when signing android app
+* Update python version in CI to python3.14
+* Add step that lists available keyrings
 * Fix some typos in pyproject.toml file
+* Remove random 'i' from pyproject.toml
+* Add missing commas to pyproject.toml
+* Force github CI to use node 24
+
+## 1.0.0 (2 September 2026)
+* Remove secretstorage from app requirements, as keyring automattically installs it
+
+## 1.0.0 (6 September 2026)
+* Add packages to system requirements to debian to ensure keyring works in minimized ubuntu
+* Remove dbus from python requirements and add it to system package requirements
+* If no keyring is found on linux, start the keyring service
+
+## 1.0.0 (07 September 2026)
+* Consolidate cryptography requirement declaration down to one declaration, and add extra package index to android install
+* Switch from netifaces to netifaces-plus
+
+## 1.0.0 (10 September 2026)
+* Add custom package index to installer args for all platforms, not just android
+
+## 1.0.0 (11 September 2026)
+* Change github CI version from python3.14 to python3.13
